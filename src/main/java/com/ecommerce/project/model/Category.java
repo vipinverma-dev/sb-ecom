@@ -1,10 +1,13 @@
 package com.ecommerce.project.model;
 
+import java.util.List;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 @Entity(name = "Category")
@@ -17,6 +20,11 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long categoryid;
 	private String categoryName;
+	
+	@OneToMany(mappedBy="category")
+	private List<Product> products;
+	
+	
 	public Category(Long categoryid, String categoryName) {
 		this.categoryid = categoryid;
 		this.categoryName = categoryName;
