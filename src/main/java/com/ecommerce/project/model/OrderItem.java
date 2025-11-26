@@ -1,5 +1,8 @@
 package com.ecommerce.project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,15 +19,28 @@ public class OrderItem {
 	private int quantity;
 	private double price;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="order_id")
+	 @JsonIgnore   // don't serialize the parent order
 	private Orders order;
 	
 	
 	@ManyToOne
 	@JoinColumn(name="product_id")
+	@JsonIgnore   // don't serialize product here
 	private Product product;
+	
 
+	
+//	public OrderItem(long orderItemId, int quantity, double price, Orders order, Product product) {
+//		super();
+//		this.orderItemId = orderItemId;
+//		this.quantity = quantity;
+//		this.price = price;
+//		this.order = order;
+//		this.product = product;
+//	}
 	
 	
 
@@ -32,16 +48,14 @@ public class OrderItem {
 		super();
 	}
 
-
 	public OrderItem(long orderItemId, int quantity, double price, Orders order, Product product) {
-		super();
-		this.orderItemId = orderItemId;
-		this.quantity = quantity;
-		this.price = price;
-		this.order = order;
-		this.product = product;
-	}
-
+	super();
+	this.orderItemId = orderItemId;
+	this.quantity = quantity;
+	this.price = price;
+	this.order = order;
+	this.product = product;
+}
 
 	public long getOrderItemId() {
 		return orderItemId;
@@ -92,10 +106,9 @@ public class OrderItem {
 		this.product = product;
 	}
 
-	
-	
+	public Product getOrderitems() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
-	
-	
 }

@@ -2,6 +2,8 @@ package com.ecommerce.project.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,22 +17,30 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
 	private String username;
+	private String passoword;
 	private String email;
 	
 	@OneToMany(mappedBy="users")
+	@JsonManagedReference
 	private List<Orders> orders;
 
-	public User(long userId, String username, String email, List<Orders> orders) {
+	
+	
+	public User(long userId, String username, String passoword, String email, List<Orders> orders) {
 		super();
 		this.userId = userId;
 		this.username = username;
+		this.passoword = passoword;
 		this.email = email;
+		
 		this.orders = orders;
+		//
+		
 	}
-	
-	
-	
-	
+
+
+
+
 	public User() {
 		super();
 	}
@@ -61,6 +71,22 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	
+	
+	public String getPassoword() {
+		return passoword;
+	}
+
+
+
+
+	public void setPassoword(String passoword) {
+		this.passoword = passoword;
+	}
+
+
+
 
 	public List<Orders> getOrders() {
 		return orders;

@@ -3,7 +3,9 @@ package com.ecommerce.project.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.project.model.Category;
 import com.ecommerce.project.model.Product;
@@ -54,14 +56,21 @@ public class ProductServiceImp implements ProductService {
 	}
 
 	@Override
-	public Product updateProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	public Product updateProduct(Product product,Long productId) {
+		 Product savedProduct = productRepository.findById(productId)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"resouce not found"));
+			product.setProductId(productId);
+			savedProduct = productRepository.save(product);
+			return savedProduct;
 	}
 
 	@Override
-	public void deleteProduct(Long id) {
-		// TODO Auto-generated method stub
+	public String deleteProduct(Long productId) {
+		Product getproduct = productRepository.findById(productId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "resouce not found"));
+		
+		productRepository.delete(getproduct);
+		return "Category with CategoryID: "+productId +" is deleted.";
 		
 	}
 
